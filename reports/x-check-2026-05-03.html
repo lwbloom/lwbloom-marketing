@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X巡回レポート｜2026-05-03</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: #f4f6f9;
+    color: #1a1a2e;
+    line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 50%, #533483 100%);
+    color: white;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 0.95rem; opacity: 0.8; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Section */
+  .section {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    padding: 16px 24px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .section-header .num {
+    background: #0f3460;
+    color: white;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+  }
+  .section-body { padding: 20px 24px; }
+
+  /* Alert box */
+  .alert {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+  .alert.danger {
+    background: #fdecea;
+    border-left-color: #e53935;
+  }
+  .alert.success {
+    background: #e8f5e9;
+    border-left-color: #43a047;
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th {
+    background: #f8f9fb;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    border-bottom: 2px solid #e8eaf0;
+    color: #555;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+
+  /* Post card */
+  .post-card {
+    border: 1px solid #e8eaf0;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .post-card:last-child { margin-bottom: 0; }
+  .post-rank {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .rank-badge {
+    background: linear-gradient(135deg, #0f3460, #533483);
+    color: white;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .scene-badge {
+    background: #e8f4fd;
+    color: #0f3460;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid #bee3f8;
+  }
+  .post-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .post-reason {
+    font-size: 0.87rem;
+    color: #555;
+    background: #f8f9fb;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+  .reply-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+  .reply-box {
+    background: #f0f4ff;
+    border: 1px solid #c5d5f5;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.87rem;
+    white-space: pre-line;
+    line-height: 1.7;
+    color: #2c3e50;
+  }
+  .reply-box.detailed {
+    background: #f8f4ff;
+    border-color: #d5c5f5;
+  }
+
+  /* Post suggestion */
+  .post-suggestion {
+    background: #f8f9fb;
+    border: 1px solid #e3e7ef;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .post-type-badge {
+    display: inline-block;
+    background: #533483;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .post-content {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.87rem;
+    white-space: pre-line;
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+  .cta-note {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* Action table */
+  .priority-high { color: #c62828; font-weight: 700; }
+  .priority-mid { color: #e65100; font-weight: 600; }
+  .priority-low { color: #2e7d32; font-weight: 500; }
+
+  /* Status grid */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .status-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .status-card .label { font-size: 0.78rem; color: #888; margin-bottom: 6px; }
+  .status-card .value { font-size: 1.1rem; font-weight: 700; }
+  .status-card.bad .value { color: #e53935; }
+  .status-card.warn .value { color: #f57c00; }
+
+  /* Type gauge */
+  .type-list { list-style: none; }
+  .type-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+  }
+  .type-list li:last-child { border-bottom: none; }
+  .type-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #e53935;
+    flex-shrink: 0;
+  }
+  .type-dot.ok { background: #43a047; }
+
+  /* Competitor */
+  .comp-card {
+    border: 1px solid #e8eaf0;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .comp-handle { font-weight: 700; color: #0f3460; margin-bottom: 4px; }
+  .comp-status {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .comp-status.low { background: #fff3cd; color: #856404; }
+  .comp-status.unknown { background: #e9ecef; color: #666; }
+  .comp-desc { font-size: 0.87rem; color: #555; }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 X・LinkedIn 巡回分析レポート</h1>
+  <p>Life & Work Bloom｜マーケティングダッシュボード</p>
+  <span class="badge">2026年5月3日 実施</span>
+</div>
+
+<div class="container">
+
+  <!-- Section 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">1</span>
+      自社アカウント分析
+    </div>
+    <div class="section-body">
+
+      <div class="alert danger">
+        ⚠️ <strong>検索可視性ほぼゼロ。</strong> `lwbloom site:x.com` および `西村徳昭 site:linkedin.com` で検索しても自社アカウントがヒットしない状態。外部からの自然流入が困難。
+      </div>
+
+      <div class="status-grid">
+        <div class="status-card bad">
+          <div class="label">X 投稿頻度（推定）</div>
+          <div class="value">週0〜2本</div>
+        </div>
+        <div class="status-card bad">
+          <div class="label">LinkedIn 投稿頻度</div>
+          <div class="value">未投稿〜初期</div>
+        </div>
+        <div class="status-card bad">
+          <div class="label">検索インデックス</div>
+          <div class="value">未達</div>
+        </div>
+        <div class="status-card warn">
+          <div class="label">フェーズ</div>
+          <div class="value">90日計画 開始点</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:0.95rem; margin-bottom:12px; color:#333;">5型バランス（推定）</h3>
+      <ul class="type-list">
+        <li><span class="type-dot"></span>違和感投稿（共感）— 不足</li>
+        <li><span class="type-dot"></span>構造化投稿（理解）— 不足</li>
+        <li><span class="type-dot"></span>面接官目線投稿（信頼）— 不足</li>
+        <li><span class="type-dot"></span>ケース投稿（確信）— 不足</li>
+        <li><span class="type-dot"></span>導線投稿（行動）— 不足</li>
+      </ul>
+
+      <h3 style="font-size:0.95rem; margin:20px 0 12px; color:#333;">不足投稿の補充案（今週使える3本）</h3>
+
+      <div class="post-suggestion">
+        <span class="post-type-badge">違和感投稿</span>
+        <div style="font-weight:600; font-size:0.92rem;">「役職がなくなっても、自分は自分だ」と思えますか？</div>
+        <div class="post-content">役職定年になった翌日。
+「おはようございます、部長」
+そう声をかけてくれる人がいなくなった。
+
+肩書きが仕事をしていたのか、
+自分が仕事をしていたのか。
+
+ここで初めて問われる。
+
+50代の意思決定の多くは、
+実はこの問いへの答えを見つける作業だ。</div>
+        <div class="cta-note">CTA：「同じ問いを持っている方、ぜひDMで話しましょう」</div>
+      </div>
+
+      <div class="post-suggestion">
+        <span class="post-type-badge">面接官目線投稿</span>
+        <div style="font-weight:600; font-size:0.92rem;">「50代の転職面接で落ちる人」には共通のパターンがある</div>
+        <div class="post-content">最終面接で50代の方を何十人も見てきた。
+通る人と落ちる人の差は、経験量じゃない。
+
+落ちる人の共通点：
+・「長所は何ですか」に20年分の棚卸しを詰め込む
+・「どんな職場に慣れていますか」で自分を"売り込む"
+
+通る人の共通点：
+・ひとつだけ言う。構造的に。
+・自分の言葉で、自分の判断軸を語る。
+
+経験は武器じゃない。
+整理された経験が武器になる。</div>
+        <div class="cta-note">CTA：「面接準備で迷っている方、個別に見ます」</div>
+      </div>
+
+      <div class="post-suggestion">
+        <span class="post-type-badge">構造化投稿</span>
+        <div style="font-weight:600; font-size:0.92rem;">「転職するか、残るか」迷う50代に見えていないもの</div>
+        <div class="post-content">転職か、現職か。
+この二択で悩む50代はとても多い。
+
+でも本当の問いは「どちらが正解か」ではない。
+
+問うべきは：
+「自分は何を大切にしていて」
+「今の判断軸はどこにズレているのか」
+
+場所の問題じゃなくて、
+軸の問題だと気づいたとき、
+たいてい答えは自分の中にある。
+
+それを一緒に言語化するのが、
+私の仕事です。</div>
+        <div class="cta-note">CTA：「Bloom Session 60（無料セッション）で話してみませんか」</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">2</span>
+      見込み客の発見
+    </div>
+    <div class="section-body">
+      <p style="font-size:0.87rem; color:#666; margin-bottom:16px;">7キーワードでX検索を実施。Life & Work Bloomのターゲットに合致する投稿を抽出。</p>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>投稿者</th>
+              <th>場面</th>
+              <th>概要</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事</small></td>
+              <td><span class="scene-badge">D: 蓄積疲弊型</span></td>
+              <td>部下8名→14名。月60h超残業の課長が限界。管理職疲弊を告発。当事者の50代管理職が集まっている可能性大</td>
+              <td><a href="https://x.com/sayu5632j/status/2042893279034048586" target="_blank">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@Kiyoshileo</strong></td>
+              <td><span class="scene-badge">B: 構造変化型</span></td>
+              <td>「役職を外され給料も下がった50代」の悩みを紹介。感情的に揺れているタイミングに当事者が反応</td>
+              <td><a href="https://x.com/Kiyoshileo/status/2031491633125134504" target="_blank">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@yuasu2453</strong><br><small>ゆうあす</small></td>
+              <td><span class="scene-badge">A・C: 迷い・時限型</span></td>
+              <td>「辞める決断ができない9つの理由」。「相談できる相手がいない」が核心。転職・早期退職に踏み切れない層に刺さる</td>
+              <td><a href="https://x.com/yuasu2453/status/2043162948491980873" target="_blank">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@nikkeibusiness</strong><br><small>日経ビジネス</small></td>
+              <td><span class="scene-badge">C: 時限判断型</span></td>
+              <td>55歳・早期退職ターゲットになった社員の実話（2026年2月）。コメント欄に当事者が集まる宝庫</td>
+              <td><a href="https://x.com/nikkeibusiness/status/2041833462135668819" target="_blank">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@phreaky</strong><br><small>村上臣</small></td>
+              <td><span class="scene-badge">D・C: 複合型</span></td>
+              <td>「50代管理職狙い撃ちリストラの真実」をシェア。高インフルエンサー。リプライ欄に50代当事者多数</td>
+              <td><a href="https://x.com/phreaky/status/2027182075997249585" target="_blank">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事</small></td>
+              <td><span class="scene-badge">A: 選択迷い型</span></td>
+              <td>40代後半男性「タイミングが悪かった世代」の告白。就職氷河期→リーマン→震災という世代の痛みを描写</td>
+              <td><a href="https://x.com/sayu5632j/status/2025122918922092582" target="_blank">リンク</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">3</span>
+      リプライ候補 TOP5
+    </div>
+    <div class="section-body">
+      <div class="alert">
+        💡 方針：<strong>絶対に売り込まない</strong>。共感 → 面接官目線 or 管理職経験からの一言 → 価値提供。サービスURLは貼らない。
+      </div>
+
+      <!-- TOP1 -->
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 1</span>
+          <span class="scene-badge">場面D: 蓄積疲弊型</span>
+        </div>
+        <div class="post-title">@sayu5632j ｜ 管理職が壊れてきている</div>
+        <div class="post-reason">
+          管理職の疲弊構造を人事目線で描写。反響が大きく当事者の50代管理職が集まっている。のりあきさんの「管理職としての1on1対話力」が直接活きる。
+        </div>
+        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-box">管理職のプレイヤー比率が上がるほど、
+「整理する時間」がゼロになりますよね。
+
+疲弊しているとき、何よりつらいのは
+「なぜこうなっているか」が見えないことだと思います。</div>
+        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-box detailed">投稿、読みました。
+当事者として「そうだった」と思う部分が多くて。
+
+私も管理職として部下を抱えた時期、
+8人→12人になったあたりから
+「育てる」と「回す」が完全に分離した感覚がありました。
+
+疲弊の本質って、量じゃなくて
+「判断する時間がなくなること」じゃないかと最近思っています。</div>
+      </div>
+
+      <!-- TOP2 -->
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 2</span>
+          <span class="scene-badge">場面A・C: 迷い・時限型</span>
+        </div>
+        <div class="post-title">@yuasu2453 ｜ 辞める決断ができない9つの理由</div>
+        <div class="post-reason">
+          「相談できる相手がいない」という核心を突いた投稿。判断軸の整理という切り口で自然にリプライできる。
+        </div>
+        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-box">この9つ、全部「情報が足りない」じゃなくて
+「判断軸が整理されていない」状態ですよね。
+
+整理できると、決断は意外と早いことが多いです。</div>
+        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-box detailed">この整理、すごく本質をついていると思います。
+
+私は50代の方の意思決定を伴走することが多いのですが、
+多くの方が「情報を増やそうとして、余計に迷う」という状態になっています。
+
+どこかで一度、自分の軸だけを整理する時間を取るのが
+近道になることが多いです。</div>
+      </div>
+
+      <!-- TOP3 -->
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 3</span>
+          <span class="scene-badge">場面B: 構造変化型</span>
+        </div>
+        <div class="post-title">@Kiyoshileo ｜ 役職定年・モチベーション低下</div>
+        <div class="post-reason">
+          役職定年後の「これからどう生きるか」というモヤモヤ。のりあきさんの「同世代当事者性」がそのまま共感に変わる。
+        </div>
+        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-box">役職定年後、「役割」じゃなくて「自分」で戦う必要が出てくる。
+
+そこが意外に盲点で、
+準備できていた人を私は一人しか見たことがないです。</div>
+        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-box detailed">紹介されていた茂木先生の言葉、刺さりました。
+
+「コントロールできないことは諦める」は正論ですが、
+私の経験では50代のリアルな悩みは
+「諦め方が分からない」んですよね。
+
+役職が変わるとき、
+しがみつくのでも諦めるのでもなく
+「自分の次のフェーズを設計する」という選択肢が
+もっと語られてほしいと思っています。</div>
+      </div>
+
+      <!-- TOP4 -->
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 4</span>
+          <span class="scene-badge">場面C: 時限判断型</span>
+        </div>
+        <div class="post-title">@nikkeibusiness ｜ 55歳・早期退職ターゲットの実話</div>
+        <div class="post-reason">
+          日経ビジネスの高質投稿。フォロワーが多くリプライするとリーチが大きい。判断軸の整理という観点で最終面接官の視点から価値提供できる。
+        </div>
+        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-box">「子どもが学生だから残る」という判断、リアルですよね。
+
+ただ、10年後の自分から見て
+今の選択をどう評価するか、という軸も
+持っておきたい場面だと思います。</div>
+        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-box detailed">「子どもが学生だから残る」は合理的に見えて、
+実は感情で決めていることが多いと思います。
+
+早期退職の場面では、
+「今の経済状況で続けるリスク」と「辞めた場合のリスク」を
+冷静に比較する作業が必要です。
+
+最終面接の場でキャリアを多く見てきた経験から言うと、
+こういう岐路での"構造化された対話"が後悔を減らすと感じています。</div>
+      </div>
+
+      <!-- TOP5 -->
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 5</span>
+          <span class="scene-badge">場面A: 選択迷い型</span>
+        </div>
+        <div class="post-title">@sayu5632j ｜ 氷河期世代のタイミングの悪さ</div>
+        <div class="post-reason">
+          同世代・当事者性が最大の武器になる投稿。「分かっている人」として認知されやすく、信頼の種まきに最適。
+        </div>
+        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-box">この世代の話、当事者として読みました。
+ずっと構造的な不運に当たり続けてきた世代だと思います。
+
+だからこそ、外からの構造化が必要だと感じています。</div>
+        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-box detailed">この投稿、深く刺さりました。
+私も同世代として、この"タイミングの悪さ"は体感してきています。
+
+ただ思うのは、この世代が「迷いやすい」のは
+意志が弱いからではなく、
+判断の軸が何度も揺らされてきたからだということ。
+
+だからこそ外部の視点で整理する機会に価値があると信じて
+伴走しています。</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">4</span>
+      競合動向（簡易チェック）
+    </div>
+    <div class="section-body">
+
+      <div class="comp-card">
+        <div class="comp-handle">@Katsuta_0511｜勝田健（ライフシフトラボ取締役）</div>
+        <span class="comp-status low">活動やや低調</span>
+        <div class="comp-desc">
+          「45歳からの実践型キャリアスクール」を標榜。最新投稿は2026年2月頃で活発ではない可能性。<br>
+          <strong>差別化：</strong>スクール型（集団）vs 個別完全伴走。「成果物が残る・面接官の目線」でlwbloomが差別化可能。
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-handle">@2G_coach・@coach_coo・@ebi320118・@asuiro_lab</div>
+        <span class="comp-status unknown">要直接確認</span>
+        <div class="comp-desc">
+          検索結果・フェッチいずれでも直近の具体的な投稿・施策を確認できず。活動が低調か、SEOインデックスが少ない状態。<br>
+          <strong>示唆：</strong>のりあきさんのX発信がこれらより積極的であれば、検索・発見での優位性が持てる。
+        </div>
+      </div>
+
+      <div class="alert success" style="margin-top:16px;">
+        💡 <strong>注目アカウント：@sayu5632j（元人事の裏垢）</strong><br>
+        競合ではないがターゲット層への強いリーチがある。投稿スタイル（現場リアル描写・共感型）は参考になる。まずフォロー＋いいねで存在を知らせることを推奨。
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">5</span>
+      今週のアクション
+    </div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>優先度</th>
+            <th>アクション</th>
+            <th>期限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="priority-high">★★★</span></td>
+            <td>リプライ候補TOP5に1日1本リプライ（月〜金で5本消化）</td>
+            <td>今週中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-high">★★★</span></td>
+            <td>不足投稿案3本をX投稿（月・水・金でスケジュール）</td>
+            <td>今週中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-mid">★★</span></td>
+            <td>@lwbloom プロフィールに「50代」「面接官」「意思決定」キーワードを追加</td>
+            <td>今日中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-mid">★★</span></td>
+            <td>競合4アカウントを直接確認（@2G_coach, @coach_coo, @ebi320118, @asuiro_lab）</td>
+            <td>今日中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-low">★</span></td>
+            <td>@sayu5632j をフォロー＋固定投稿にいいね</td>
+            <td>今日中</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:20px; background:#f8f9fb; border-radius:8px; padding:14px;">
+        <strong style="font-size:0.9rem; display:block; margin-bottom:8px;">📌 次回巡回精度向上のために</strong>
+        <p style="font-size:0.85rem; color:#555;">X.comは認証ウォールにより自動フェッチ不可。以下の形式で投稿データをメモしていただくと、次回からエビデンスベースの分析が可能になります：</p>
+        <code style="display:block; background:#e8eaf0; border-radius:6px; padding:10px 12px; margin-top:8px; font-size:0.82rem; line-height:1.8;">
+          日付 | 投稿型 | いいね数 | リポスト数 | 主なリプライ内容
+        </code>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Life & Work Bloom マーケティングレポート｜生成日: 2026-05-03
+</footer>
+
+</body>
+</html>
