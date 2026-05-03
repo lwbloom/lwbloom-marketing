@@ -31,7 +31,6 @@
   }
   .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
 
-  /* Section */
   .section {
     background: white;
     border-radius: 12px;
@@ -58,7 +57,6 @@
   }
   .section-body { padding: 20px 24px; }
 
-  /* Alert box */
   .alert {
     background: #fff3cd;
     border-left: 4px solid #ffc107;
@@ -67,16 +65,9 @@
     margin-bottom: 16px;
     font-size: 0.9rem;
   }
-  .alert.danger {
-    background: #fdecea;
-    border-left-color: #e53935;
-  }
-  .alert.success {
-    background: #e8f5e9;
-    border-left-color: #43a047;
-  }
+  .alert.danger { background: #fdecea; border-left-color: #e53935; }
+  .alert.success { background: #e8f5e9; border-left-color: #43a047; }
 
-  /* Table */
   table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
   th {
     background: #f8f9fb;
@@ -94,7 +85,6 @@
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #fafbff; }
 
-  /* Post card */
   .post-card {
     border: 1px solid #e8eaf0;
     border-radius: 10px;
@@ -107,6 +97,7 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
+    flex-wrap: wrap;
   }
   .rank-badge {
     background: linear-gradient(135deg, #0f3460, #533483);
@@ -125,7 +116,10 @@
     font-weight: 600;
     border: 1px solid #bee3f8;
   }
-  .post-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .post-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+  .post-url { font-size: 0.82rem; margin-bottom: 10px; }
+  .post-url a { color: #0f3460; text-decoration: none; }
+  .post-url a:hover { text-decoration: underline; }
   .post-reason {
     font-size: 0.87rem;
     color: #555;
@@ -153,12 +147,8 @@
     line-height: 1.7;
     color: #2c3e50;
   }
-  .reply-box.detailed {
-    background: #f8f4ff;
-    border-color: #d5c5f5;
-  }
+  .reply-box.detailed { background: #f8f4ff; border-color: #d5c5f5; }
 
-  /* Post suggestion */
   .post-suggestion {
     background: #f8f9fb;
     border: 1px solid #e3e7ef;
@@ -175,6 +165,15 @@
     font-size: 0.75rem;
     font-weight: 700;
     margin-bottom: 8px;
+  }
+  .post-hook {
+    font-size: 0.85rem;
+    color: #0f3460;
+    font-weight: 600;
+    margin-bottom: 6px;
+    padding: 6px 10px;
+    background: #e8f4fd;
+    border-radius: 6px;
   }
   .post-content {
     background: white;
@@ -193,12 +192,10 @@
     font-style: italic;
   }
 
-  /* Action table */
   .priority-high { color: #c62828; font-weight: 700; }
   .priority-mid { color: #e65100; font-weight: 600; }
   .priority-low { color: #2e7d32; font-weight: 500; }
 
-  /* Status grid */
   .status-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -216,7 +213,6 @@
   .status-card.bad .value { color: #e53935; }
   .status-card.warn .value { color: #f57c00; }
 
-  /* Type gauge */
   .type-list { list-style: none; }
   .type-list li {
     display: flex;
@@ -233,9 +229,7 @@
     background: #e53935;
     flex-shrink: 0;
   }
-  .type-dot.ok { background: #43a047; }
 
-  /* Competitor */
   .comp-card {
     border: 1px solid #e8eaf0;
     border-radius: 8px;
@@ -252,7 +246,20 @@
   }
   .comp-status.low { background: #fff3cd; color: #856404; }
   .comp-status.unknown { background: #e9ecef; color: #666; }
+  .comp-status.active { background: #d4edda; color: #155724; }
   .comp-desc { font-size: 0.87rem; color: #555; }
+
+  .new-badge {
+    display: inline-block;
+    background: #e53935;
+    color: white;
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
 
   footer {
     text-align: center;
@@ -281,7 +288,7 @@
     <div class="section-body">
 
       <div class="alert danger">
-        ⚠️ <strong>検索可視性ほぼゼロ。</strong> `lwbloom site:x.com` および `西村徳昭 site:linkedin.com` で検索しても自社アカウントがヒットしない状態。外部からの自然流入が困難。
+        ⚠️ <strong>検索可視性ほぼゼロ。</strong> <code>lwbloom site:x.com</code> および <code>西村徳昭 site:linkedin.com</code> で検索しても自社アカウントがヒットしない状態。外部からの自然流入が困難。
       </div>
 
       <div class="status-grid">
@@ -316,12 +323,8 @@
 
       <div class="post-suggestion">
         <span class="post-type-badge">違和感投稿</span>
-        <div style="font-weight:600; font-size:0.92rem;">「役職がなくなっても、自分は自分だ」と思えますか？</div>
-        <div class="post-content">役職定年になった翌日。
-「おはようございます、部長」
-そう声をかけてくれる人がいなくなった。
-
-肩書きが仕事をしていたのか、
+        <div class="post-hook">フック：役職定年になった翌日。「おはようございます、部長」そう声をかけてくれる人がいなくなった。</div>
+        <div class="post-content">肩書きが仕事をしていたのか、
 自分が仕事をしていたのか。
 
 ここで初めて問われる。
@@ -333,11 +336,8 @@
 
       <div class="post-suggestion">
         <span class="post-type-badge">面接官目線投稿</span>
-        <div style="font-weight:600; font-size:0.92rem;">「50代の転職面接で落ちる人」には共通のパターンがある</div>
-        <div class="post-content">最終面接で50代の方を何十人も見てきた。
-通る人と落ちる人の差は、経験量じゃない。
-
-落ちる人の共通点：
+        <div class="post-hook">フック：最終面接で50代の方を何十人も見てきた。通る人と落ちる人の差は、経験量じゃない。</div>
+        <div class="post-content">落ちる人の共通点：
 ・「長所は何ですか」に20年分の棚卸しを詰め込む
 ・「どんな職場に慣れていますか」で自分を"売り込む"
 
@@ -352,13 +352,8 @@
 
       <div class="post-suggestion">
         <span class="post-type-badge">構造化投稿</span>
-        <div style="font-weight:600; font-size:0.92rem;">「転職するか、残るか」迷う50代に見えていないもの</div>
-        <div class="post-content">転職か、現職か。
-この二択で悩む50代はとても多い。
-
-でも本当の問いは「どちらが正解か」ではない。
-
-問うべきは：
+        <div class="post-hook">フック：転職か、現職か。この二択で悩む50代はとても多い。でも本当の問いは「どちらが正解か」ではない。</div>
+        <div class="post-content">問うべきは：
 「自分は何を大切にしていて」
 「今の判断軸はどこにズレているのか」
 
@@ -394,27 +389,27 @@
           </thead>
           <tbody>
             <tr>
-              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事</small></td>
+              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事の裏垢</small></td>
               <td><span class="scene-badge">D: 蓄積疲弊型</span></td>
-              <td>部下8名→14名。月60h超残業の課長が限界。管理職疲弊を告発。当事者の50代管理職が集まっている可能性大</td>
+              <td>部下8名→14名の課長が月60h超残業。管理職の疲弊構造を告発。当事者の50代管理職が集まっている可能性大</td>
               <td><a href="https://x.com/sayu5632j/status/2042893279034048586" target="_blank">リンク</a></td>
             </tr>
             <tr>
-              <td><strong>@Kiyoshileo</strong></td>
+              <td><strong>@Kiyoshileo</strong><br><small>Kiyoshi</small></td>
               <td><span class="scene-badge">B: 構造変化型</span></td>
-              <td>「役職を外され給料も下がった50代」の悩みを紹介。感情的に揺れているタイミングに当事者が反応</td>
+              <td>「役職を外され給料も下がった50代の悩み」に茂木健一郎が回答。感情的に揺れているタイミングに当事者が反応</td>
               <td><a href="https://x.com/Kiyoshileo/status/2031491633125134504" target="_blank">リンク</a></td>
             </tr>
             <tr>
               <td><strong>@yuasu2453</strong><br><small>ゆうあす</small></td>
               <td><span class="scene-badge">A・C: 迷い・時限型</span></td>
-              <td>「辞める決断ができない9つの理由」。「相談できる相手がいない」が核心。転職・早期退職に踏み切れない層に刺さる</td>
+              <td>「辞める決断ができない9つの理由」。「相談できる相手がいない」が核心。転職・早期退職に踏み切れない層に深く刺さる</td>
               <td><a href="https://x.com/yuasu2453/status/2043162948491980873" target="_blank">リンク</a></td>
             </tr>
             <tr>
               <td><strong>@nikkeibusiness</strong><br><small>日経ビジネス</small></td>
               <td><span class="scene-badge">C: 時限判断型</span></td>
-              <td>55歳・早期退職ターゲットになった社員の実話（2026年2月）。コメント欄に当事者が集まる宝庫</td>
+              <td>55歳・早期退職ターゲットになった社員の実話（2026年2月）。リプライ欄に当事者が集まる宝庫</td>
               <td><a href="https://x.com/nikkeibusiness/status/2041833462135668819" target="_blank">リンク</a></td>
             </tr>
             <tr>
@@ -423,8 +418,14 @@
               <td>「50代管理職狙い撃ちリストラの真実」をシェア。高インフルエンサー。リプライ欄に50代当事者多数</td>
               <td><a href="https://x.com/phreaky/status/2027182075997249585" target="_blank">リンク</a></td>
             </tr>
+            <tr style="background:#fffde7;">
+              <td><strong>@kei__tenshoku</strong><br><small>けい｜人事部長</small> <span class="new-badge">NEW</span></td>
+              <td><span class="scene-badge">E: 成果直結型</span></td>
+              <td>「最終面接で落ちる人には共通点がある」。のりあきさんの最終面接官経験が直接噛み合う絶好の投稿</td>
+              <td><a href="https://x.com/kei__tenshoku/status/2049354423541907763" target="_blank">リンク</a></td>
+            </tr>
             <tr>
-              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事</small></td>
+              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事の裏垢</small></td>
               <td><span class="scene-badge">A: 選択迷い型</span></td>
               <td>40代後半男性「タイミングが悪かった世代」の告白。就職氷河期→リーマン→震災という世代の痛みを描写</td>
               <td><a href="https://x.com/sayu5632j/status/2025122918922092582" target="_blank">リンク</a></td>
@@ -453,16 +454,17 @@
           <span class="scene-badge">場面D: 蓄積疲弊型</span>
         </div>
         <div class="post-title">@sayu5632j ｜ 管理職が壊れてきている</div>
+        <div class="post-url"><a href="https://x.com/sayu5632j/status/2042893279034048586" target="_blank">x.com/sayu5632j/status/2042893279034048586</a></div>
         <div class="post-reason">
-          管理職の疲弊構造を人事目線で描写。反響が大きく当事者の50代管理職が集まっている。のりあきさんの「管理職としての1on1対話力」が直接活きる。
+          管理職の疲弊構造を人事目線で描写した反響大の投稿。のりあきさんの「管理職1on1対話力・同世代当事者性」が直接活きる。コメント欄に50代当事者が集まっている可能性が高く、リプライしただけでその人たちへの認知も同時に得られる。
         </div>
-        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-label">短文版</div>
         <div class="reply-box">管理職のプレイヤー比率が上がるほど、
 「整理する時間」がゼロになりますよね。
 
 疲弊しているとき、何よりつらいのは
 「なぜこうなっているか」が見えないことだと思います。</div>
-        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-label">丁寧版</div>
         <div class="reply-box detailed">投稿、読みました。
 当事者として「そうだった」と思う部分が多くて。
 
@@ -481,15 +483,16 @@
           <span class="scene-badge">場面A・C: 迷い・時限型</span>
         </div>
         <div class="post-title">@yuasu2453 ｜ 辞める決断ができない9つの理由</div>
+        <div class="post-url"><a href="https://x.com/yuasu2453/status/2043162948491980873" target="_blank">x.com/yuasu2453/status/2043162948491980873</a></div>
         <div class="post-reason">
-          「相談できる相手がいない」という核心を突いた投稿。判断軸の整理という切り口で自然にリプライできる。
+          「相談できる相手がいない」という核心を突いた投稿。判断軸の整理という切り口で自然にリプライでき、「この人は分かっている」と感じてもらいやすい。
         </div>
-        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-label">短文版</div>
         <div class="reply-box">この9つ、全部「情報が足りない」じゃなくて
 「判断軸が整理されていない」状態ですよね。
 
 整理できると、決断は意外と早いことが多いです。</div>
-        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-label">丁寧版</div>
         <div class="reply-box detailed">この整理、すごく本質をついていると思います。
 
 私は50代の方の意思決定を伴走することが多いのですが、
@@ -500,21 +503,51 @@
       </div>
 
       <!-- TOP3 -->
-      <div class="post-card">
+      <div class="post-card" style="border-color:#f9a825;">
         <div class="post-rank">
           <span class="rank-badge">TOP 3</span>
+          <span class="scene-badge">場面E: 成果直結型</span>
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="post-title">@kei__tenshoku ｜ 最終面接で落ちる人の共通点</div>
+        <div class="post-url"><a href="https://x.com/kei__tenshoku/status/2049354423541907763" target="_blank">x.com/kei__tenshoku/status/2049354423541907763</a></div>
+        <div class="post-reason">
+          大手メーカー人事部長視点の投稿。のりあきさんの「最終面接官経験」と完全に重なり、同じ目線から独自の補足が可能。面接に悩む50代当事者へのリーチが見込める。
+        </div>
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">最終面接官として何十人も見てきた感覚と重なります。
+
+特に「一次・二次と同じ回答を使い回す」は、
+準備した内容を"消化"しようとするから起きる。
+最終は"会話"なんですよね。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">この指摘、すごくリアルです。
+
+私も最終面接官をやっていた立場から言うと、
+一番気になるのは「なぜうちか」への答え方より前の段階で、
+「この人は自分の判断軸を持っているか」を見ていました。
+
+50代の方は経験が豊富なぶん、整理してから話す一手が効く。
+量より構造です。</div>
+      </div>
+
+      <!-- TOP4 -->
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 4</span>
           <span class="scene-badge">場面B: 構造変化型</span>
         </div>
         <div class="post-title">@Kiyoshileo ｜ 役職定年・モチベーション低下</div>
+        <div class="post-url"><a href="https://x.com/Kiyoshileo/status/2031491633125134504" target="_blank">x.com/Kiyoshileo/status/2031491633125134504</a></div>
         <div class="post-reason">
-          役職定年後の「これからどう生きるか」というモヤモヤ。のりあきさんの「同世代当事者性」がそのまま共感に変わる。
+          役職定年後の「これからどう生きるか」というモヤモヤ。のりあきさんの「同世代当事者性」がそのまま共感に変わり、「しがみつくでも諦めるでもない第三の選択肢」を伝えられる。
         </div>
-        <div class="reply-label">リプライ案（短文版）</div>
+        <div class="reply-label">短文版</div>
         <div class="reply-box">役職定年後、「役割」じゃなくて「自分」で戦う必要が出てくる。
 
 そこが意外に盲点で、
 準備できていた人を私は一人しか見たことがないです。</div>
-        <div class="reply-label">リプライ案（丁寧版）</div>
+        <div class="reply-label">丁寧版</div>
         <div class="reply-box detailed">紹介されていた茂木先生の言葉、刺さりました。
 
 「コントロールできないことは諦める」は正論ですが、
@@ -527,59 +560,34 @@
 もっと語られてほしいと思っています。</div>
       </div>
 
-      <!-- TOP4 -->
-      <div class="post-card">
-        <div class="post-rank">
-          <span class="rank-badge">TOP 4</span>
-          <span class="scene-badge">場面C: 時限判断型</span>
-        </div>
-        <div class="post-title">@nikkeibusiness ｜ 55歳・早期退職ターゲットの実話</div>
-        <div class="post-reason">
-          日経ビジネスの高質投稿。フォロワーが多くリプライするとリーチが大きい。判断軸の整理という観点で最終面接官の視点から価値提供できる。
-        </div>
-        <div class="reply-label">リプライ案（短文版）</div>
-        <div class="reply-box">「子どもが学生だから残る」という判断、リアルですよね。
-
-ただ、10年後の自分から見て
-今の選択をどう評価するか、という軸も
-持っておきたい場面だと思います。</div>
-        <div class="reply-label">リプライ案（丁寧版）</div>
-        <div class="reply-box detailed">「子どもが学生だから残る」は合理的に見えて、
-実は感情で決めていることが多いと思います。
-
-早期退職の場面では、
-「今の経済状況で続けるリスク」と「辞めた場合のリスク」を
-冷静に比較する作業が必要です。
-
-最終面接の場でキャリアを多く見てきた経験から言うと、
-こういう岐路での"構造化された対話"が後悔を減らすと感じています。</div>
-      </div>
-
       <!-- TOP5 -->
       <div class="post-card">
         <div class="post-rank">
           <span class="rank-badge">TOP 5</span>
-          <span class="scene-badge">場面A: 選択迷い型</span>
+          <span class="scene-badge">場面C: 時限判断型</span>
         </div>
-        <div class="post-title">@sayu5632j ｜ 氷河期世代のタイミングの悪さ</div>
+        <div class="post-title">@nikkeibusiness ｜ 55歳・早期退職ターゲットの実話</div>
+        <div class="post-url"><a href="https://x.com/nikkeibusiness/status/2041833462135668819" target="_blank">x.com/nikkeibusiness/status/2041833462135668819</a></div>
         <div class="post-reason">
-          同世代・当事者性が最大の武器になる投稿。「分かっている人」として認知されやすく、信頼の種まきに最適。
+          日経ビジネスの高質投稿。フォロワー多数でリプライするとリーチが大きい。「10年後の自分から見た判断軸」という時間軸の視点で価値提供できる。
         </div>
-        <div class="reply-label">リプライ案（短文版）</div>
-        <div class="reply-box">この世代の話、当事者として読みました。
-ずっと構造的な不運に当たり続けてきた世代だと思います。
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">「子どもが学生だから残る」という判断、
+リアルですよね。
 
-だからこそ、外からの構造化が必要だと感じています。</div>
-        <div class="reply-label">リプライ案（丁寧版）</div>
-        <div class="reply-box detailed">この投稿、深く刺さりました。
-私も同世代として、この"タイミングの悪さ"は体感してきています。
+ただ、10年後の自分から見て
+今の選択をどう評価するか、という軸も
+持っておきたい場面だと思います。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">「子どもが学生だから残る」は合理的に見えて、
+実は感情で決めていることが多いと思います。
 
-ただ思うのは、この世代が「迷いやすい」のは
-意志が弱いからではなく、
-判断の軸が何度も揺らされてきたからだということ。
+早期退職の場面では、
+「今のまま続けるリスク」と「辞めた場合のリスク」を
+冷静に並べる作業が必要です。
 
-だからこそ外部の視点で整理する機会に価値があると信じて
-伴走しています。</div>
+こういう岐路での構造化された対話が後悔を減らすと、
+多くの方を見てきて感じています。</div>
       </div>
 
     </div>
@@ -595,25 +603,34 @@
 
       <div class="comp-card">
         <div class="comp-handle">@Katsuta_0511｜勝田健（ライフシフトラボ取締役）</div>
-        <span class="comp-status low">活動やや低調</span>
+        <span class="comp-status low">活動低頻度</span>
         <div class="comp-desc">
-          「45歳からの実践型キャリアスクール」を標榜。最新投稿は2026年2月頃で活発ではない可能性。<br>
-          <strong>差別化：</strong>スクール型（集団）vs 個別完全伴走。「成果物が残る・面接官の目線」でlwbloomが差別化可能。
+          「45歳からの実践型キャリアスクール」を標榜。プロフィール確認済だが直近投稿は低頻度。<br>
+          <strong>差別化：</strong>スクール型（集団受講）vs 個別完全伴走。「成果物が残る・面接官の目線」でlwbloomが優位。
         </div>
       </div>
 
       <div class="comp-card">
-        <div class="comp-handle">@2G_coach・@coach_coo・@ebi320118・@asuiro_lab</div>
+        <div class="comp-handle">@2G_coach｜つーじー（47歳からのキャリア再起動）</div>
+        <span class="comp-status active">プロフィール確認済</span>
+        <div class="comp-desc">
+          47歳での転職経験を軸にしたキャリアコーチ。「大手電機メーカー17年→転職」という自分語りが軸。<br>
+          <strong>差別化：</strong>「47歳の自分語り」vs「58歳・最終面接官の構造化力」。のりあきさんは「見る側」の経験があることが最大の違い。
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-handle">@coach_coo・@ebi320118・@asuiro_lab</div>
         <span class="comp-status unknown">要直接確認</span>
         <div class="comp-desc">
-          検索結果・フェッチいずれでも直近の具体的な投稿・施策を確認できず。活動が低調か、SEOインデックスが少ない状態。<br>
+          検索・フェッチいずれでも直近の具体的な投稿・施策を確認できず。活動が低調か、SEOインデックスが少ない状態。<br>
           <strong>示唆：</strong>のりあきさんのX発信がこれらより積極的であれば、検索・発見での優位性が持てる。
         </div>
       </div>
 
       <div class="alert success" style="margin-top:16px;">
-        💡 <strong>注目アカウント：@sayu5632j（元人事の裏垢）</strong><br>
-        競合ではないがターゲット層への強いリーチがある。投稿スタイル（現場リアル描写・共感型）は参考になる。まずフォロー＋いいねで存在を知らせることを推奨。
+        💡 <strong>注目アカウント：@sayu5632j（元人事の裏垢）・@kei__tenshoku（人事部長）</strong><br>
+        競合ではないがターゲット層への強いリーチがある。現場リアル描写・面接官目線の投稿スタイルは参考になる。まずフォロー＋いいねで存在を知らせることを推奨。
       </div>
     </div>
   </div>
@@ -622,7 +639,7 @@
   <div class="section">
     <div class="section-header">
       <span class="num">5</span>
-      今週のアクション
+      今週のアクション提案
     </div>
     <div class="section-body">
       <table>
@@ -651,12 +668,12 @@
           </tr>
           <tr>
             <td><span class="priority-mid">★★</span></td>
-            <td>競合4アカウントを直接確認（@2G_coach, @coach_coo, @ebi320118, @asuiro_lab）</td>
+            <td>競合3アカウントを直接確認（@coach_coo, @ebi320118, @asuiro_lab）</td>
             <td>今日中</td>
           </tr>
           <tr>
             <td><span class="priority-low">★</span></td>
-            <td>@sayu5632j をフォロー＋固定投稿にいいね</td>
+            <td>@sayu5632j・@kei__tenshoku をフォロー＋固定投稿にいいね</td>
             <td>今日中</td>
           </tr>
         </tbody>
