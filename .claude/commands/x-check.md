@@ -108,3 +108,4 @@ description: X・LinkedInの巡回分析と見込み客発見
 
 レポートを reports/ フォルダに以下のファイル名で保存すること：
 reports/x-check-YYYY-MM-DD.md（当日の日付）
+作成したmdファイルをwebで視覚的に見やすくすファイルを作成すること
