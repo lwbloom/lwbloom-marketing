@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X巡回レポート｜2026-05-04</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: #f4f6f9;
+    color: #1a1a2e;
+    line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 50%, #533483 100%);
+    color: white;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 0.95rem; opacity: 0.8; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Section */
+  .section {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    padding: 16px 24px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .section-header .num {
+    background: #0f3460;
+    color: white;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+  }
+  .section-body { padding: 20px 24px; }
+
+  /* Alert box */
+  .alert {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+  .alert.danger {
+    background: #fdecea;
+    border-left-color: #e53935;
+  }
+  .alert.success {
+    background: #e8f5e9;
+    border-left-color: #43a047;
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th {
+    background: #f8f9fb;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    border-bottom: 2px solid #e8eaf0;
+    color: #555;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+
+  /* Post card */
+  .post-card {
+    border: 1px solid #e8eaf0;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .post-card:last-child { margin-bottom: 0; }
+  .post-rank {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .rank-badge {
+    background: linear-gradient(135deg, #0f3460, #533483);
+    color: white;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .scene-badge {
+    background: #e8f4fd;
+    color: #0f3460;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid #bee3f8;
+  }
+  .post-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+  .post-reason {
+    font-size: 0.87rem;
+    color: #555;
+    background: #f8f9fb;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+  .reply-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+  .reply-box {
+    background: #f0f4ff;
+    border: 1px solid #c5d5f5;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.87rem;
+    white-space: pre-line;
+    line-height: 1.7;
+    color: #2c3e50;
+  }
+  .reply-box.detailed {
+    background: #f8f4ff;
+    border-color: #d5c5f5;
+  }
+
+  /* Post suggestion */
+  .post-suggestion {
+    background: #f8f9fb;
+    border: 1px solid #e3e7ef;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .post-type-badge {
+    display: inline-block;
+    background: #533483;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .post-content {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.87rem;
+    white-space: pre-line;
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+  .cta-note {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* Action table */
+  .priority-high { color: #c62828; font-weight: 700; }
+  .priority-mid { color: #e65100; font-weight: 600; }
+  .priority-low { color: #2e7d32; font-weight: 500; }
+
+  /* Status grid */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .status-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .status-card .label { font-size: 0.78rem; color: #888; margin-bottom: 6px; }
+  .status-card .value { font-size: 1.1rem; font-weight: 700; }
+  .status-card.bad .value { color: #e53935; }
+  .status-card.warn .value { color: #f57c00; }
+
+  /* Type gauge */
+  .type-list { list-style: none; }
+  .type-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+  }
+  .type-list li:last-child { border-bottom: none; }
+  .type-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #e53935;
+    flex-shrink: 0;
+  }
+  .type-dot.ok { background: #43a047; }
+
+  /* Competitor */
+  .comp-card {
+    border: 1px solid #e8eaf0;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .comp-handle { font-weight: 700; color: #0f3460; margin-bottom: 4px; }
+  .comp-status {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .comp-status.low { background: #fff3cd; color: #856404; }
+  .comp-status.unknown { background: #e9ecef; color: #666; }
+  .comp-status.active { background: #d4edda; color: #155724; }
+  .comp-desc { font-size: 0.87rem; color: #555; }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>X・LinkedIn 巡回分析レポート</h1>
+  <p>Life & Work Bloom｜マーケティングダッシュボード</p>
+  <span class="badge">2026年5月4日 実施</span>
+</div>
+
+<div class="container">
+
+  <!-- Section 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">1</span>
+      自社アカウント分析
+    </div>
+    <div class="section-body">
+
+      <div class="alert danger">
+        <strong>検索可視性ほぼゼロ（前日から変化なし）。</strong> <code>lwbloom site:x.com</code> および <code>西村徳昭 site:linkedin.com</code> で検索しても自社アカウントがヒットしない状態。外部からの自然流入が困難な状況が継続中。
+      </div>
+
+      <div class="status-grid">
+        <div class="status-card bad">
+          <div class="label">X 投稿頻度（推定）</div>
+          <div class="value">週0〜2本</div>
+        </div>
+        <div class="status-card bad">
+          <div class="label">LinkedIn 投稿頻度</div>
+          <div class="value">未投稿〜初期</div>
+        </div>
+        <div class="status-card bad">
+          <div class="label">検索インデックス</div>
+          <div class="value">未達</div>
+        </div>
+        <div class="status-card warn">
+          <div class="label">フェーズ</div>
+          <div class="value">90日計画 開始点</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:0.95rem; margin-bottom:12px; color:#333;">5型バランス（推定）</h3>
+      <ul class="type-list">
+        <li><span class="type-dot"></span>違和感投稿（共感）— 不足</li>
+        <li><span class="type-dot"></span>構造化投稿（理解）— 不足</li>
+        <li><span class="type-dot"></span>面接官目線投稿（信頼）— 不足</li>
+        <li><span class="type-dot"></span>ケース投稿（確信）— 不足</li>
+        <li><span class="type-dot"></span>導線投稿（行動）— 不足</li>
+      </ul>
+
+      <h3 style="font-size:0.95rem; margin:20px 0 12px; color:#333;">不足投稿の補充案（今週使える3本）</h3>
+
+      <div class="post-suggestion">
+        <span class="post-type-badge">違和感投稿</span>
+        <div style="font-weight:600; font-size:0.92rem;">「管理職15年目の同期から連絡が来た話」</div>
+        <div class="post-content">管理職15年目の同期から連絡が来た。
+「もう限界かもしれない」
+
+部下の数は3年で倍になった。
+決裁権は変わらないまま。
+
+誰かに見てもらいたいのに、上司には言えない。
+部下にも言えない。
+でも答えを出さなきゃいけない期限だけは近づいてくる。
+
+こういう人と、話したい。</div>
+        <div class="cta-note">CTA：「DM、いつでも開いています」</div>
+      </div>
+
+      <div class="post-suggestion">
+        <span class="post-type-badge">面接官目線投稿</span>
+        <div style="font-weight:600; font-size:0.92rem;">「50代で最終面接を通る人には共通点がある」</div>
+        <div class="post-content">50代で最終面接まで残れる人には共通点がある。
+
+「あなたの強みは？」
+
+落ちる人：「30年のキャリアで培った幅広い経験を…」
+受かる人：「○○の場面で、こういう判断をした人間です」
+
+長さじゃない。密度でもない。
+「判断軸が見える」かどうかだ。
+
+面接は、答えではなく、思考を見ている。</div>
+        <div class="cta-note">CTA：「面接準備で迷っている方、個別に相談に乗ります」</div>
+      </div>
+
+      <div class="post-suggestion">
+        <span class="post-type-badge">ケース投稿</span>
+        <div style="font-weight:600; font-size:0.92rem;">「Aさん（52歳）が転職をやめた理由」</div>
+        <div class="post-content">3ヶ月前、「絶対に転職する」と言っていたAさん（52歳）。
+今は現職に残ることを決めた。
+
+変わったのは状況じゃなく、「何で判断するか」の軸だった。
+
+セッション3回目に出てきた言葉：
+「自分が何を大切にしているのか、初めてわかった気がします」
+
+答えを変えることより、軸を整えることのほうが、大事だった。</div>
+        <div class="cta-note">CTA：「Bloom Session 60（無料）で話してみませんか」</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">2</span>
+      見込み客の発見
+    </div>
+    <div class="section-body">
+      <p style="font-size:0.87rem; color:#666; margin-bottom:16px;">7キーワードでX検索を実施。Life & Work Bloomのターゲットに合致する投稿を抽出。</p>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>投稿者</th>
+              <th>場面</th>
+              <th>概要</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事の裏垢</small></td>
+              <td><span class="scene-badge">D: 蓄積疲弊型</span></td>
+              <td>部下8人→14人に増えた課長が月60h超残業。管理職手当3万円のみで限界。当事者の50代管理職が集まっている可能性大</td>
+              <td><a href="https://x.com/sayu5632j/status/2042893279034048586" target="_blank" style="color:#0f3460; font-size:0.8rem;">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@sayu5632j</strong><br><small>さゆり@元人事の裏垢</small></td>
+              <td><span class="scene-badge">A/D: 複合型</span></td>
+              <td>40代後半男性の転職相談。「キャリアアップ」と書いたが本音は「僕の世代ずっとタイミングが悪い」（氷河期・リーマン・震災）という世代的疲弊感</td>
+              <td><a href="https://x.com/sayu5632j/status/2025122918922092582" target="_blank" style="color:#0f3460; font-size:0.8rem;">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@Kiyoshileo</strong><br><small>Kiyoshi</small></td>
+              <td><span class="scene-badge">B: 構造変化型</span></td>
+              <td>役職定年で給料が下がった50代会社員の悩みを共有。「自分がコントロールできないことは諦める」という処方箋への言及</td>
+              <td><a href="https://x.com/Kiyoshileo/status/2031491633125134504" target="_blank" style="color:#0f3460; font-size:0.8rem;">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@yuasu2453</strong><br><small>ゆうあす</small></td>
+              <td><span class="scene-badge">A: 選択迷い型</span></td>
+              <td>転職するか、しないか。何週間も何ヶ月も立ち止まった人向けに「決断を急がせないnote」を無料公開</td>
+              <td><a href="https://x.com/yuasu2453/status/2017539631647244755" target="_blank" style="color:#0f3460; font-size:0.8rem;">リンク</a></td>
+            </tr>
+            <tr>
+              <td><strong>@nikkeibusiness</strong><br><small>日経ビジネス</small></td>
+              <td><span class="scene-badge">C: 時限判断型</span></td>
+              <td>55歳社員が新聞で早期退職募集を知り2日後に人事メール。「子供がまだ学生だから残る」という感情的判断の典型例</td>
+              <td><a href="https://x.com/nikkeibusiness/status/2041833462135668819" target="_blank" style="color:#0f3460; font-size:0.8rem;">リンク</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">3</span>
+      リプライ候補 TOP5
+    </div>
+    <div class="section-body">
+
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 1</span>
+          <span class="scene-badge">D: 蓄積疲弊型</span>
+        </div>
+        <div class="post-title">@sayu5632j「管理職が壊れてきてる」</div>
+        <div class="post-reason">管理職経験が直接活きる。「増員だけして権限は変わらない」という構造的矛盾を経営側・管理職側の両方から語れるのはのりあきさんだけ。この投稿には50代管理職が集まっておりリーチが見込める。</div>
+        <a href="https://x.com/sayu5632j/status/2042893279034048586" target="_blank" style="font-size:0.8rem; color:#0f3460;">投稿を見る</a>
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">権限が変わらないまま責任だけ増える構造、本当につらいですよね。私もその立場にいたので、「限界」と感じた瞬間の重さは少しわかる気がします。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">読んでいて、胸が痛くなりました。部下の数が倍になって、でも決裁権は変わらない。この非対称さを放置する組織が多すぎる。私自身、管理職として同じ壁に何度もぶつかってきました。「誰にも言えない」という状況が一番消耗する。もし話せる場所が欲しいと思ったら、声をかけてください。</div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 2</span>
+          <span class="scene-badge">C: 時限判断型</span>
+        </div>
+        <div class="post-title">@nikkeibusiness「早期退職を新聞で知った55歳」</div>
+        <div class="post-reason">「子供が学生だから残る」は感情的判断の典型。意思決定の軸を整理するコアが直接刺さる。日経ビジネスの記事RTなので閲覧者が多く、共感RTも多数見込める。</div>
+        <a href="https://x.com/nikkeibusiness/status/2041833462135668819" target="_blank" style="font-size:0.8rem; color:#0f3460;">投稿を見る</a>
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">「子供が学生だから」は理由ではなく、条件です。その条件の中で、自分は何を優先したいのか——そこを整理しないまま答えを出すと、後で後悔しやすい。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">早期退職の打診を受けた瞬間の動揺、想像するだけでしんどいです。「子供がまだ学生だから残る」という判断は、正しいかどうかより先に、自分の軸が整理されていないと後から「あれでよかったのか」と引きずりやすい。残る理由と残りたい理由は、違うことがあります。この判断、急ぐ必要はありません。</div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 3</span>
+          <span class="scene-badge">B: 構造変化型</span>
+        </div>
+        <div class="post-title">@Kiyoshileo「役職定年後のモチベーション」</div>
+        <div class="post-reason">「諦める」という処方箋に対して「再設計する」という別の視点を提供できる。売り込みにならない一言が打てる場面。役職定年後の50代が多数閲覧している。</div>
+        <a href="https://x.com/Kiyoshileo/status/2031491633125134504" target="_blank" style="font-size:0.8rem; color:#0f3460;">投稿を見る</a>
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">「諦める」は一つの選択肢ですが、「どこに力を向けるか再設計する」という選択肢もある。役職定年後のほうが、自分の時間を取り戻せる人もいます。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">役職を外れた後に「モチベーションが下がった」と感じる方は多いです。ただ、その感覚の奥には「自分が大切にしてきたものは何だったか」という問いが潜んでいることが多い。「諦める」ことと「軸を整え直す」ことは別の話。後者のほうが、次の5年を変えられることがあります。</div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 4</span>
+          <span class="scene-badge">A: 選択迷い型</span>
+        </div>
+        <div class="post-title">@yuasu2453「転職するか、しないか立ち止まった人へ」</div>
+        <div class="post-reason">「決断を急がせない」という切り口はのりあきさんの哲学と重なる。共感から自然に判断軸整理の価値を示せる。コンテンツ発信者なのでリプが伝わりやすい。</div>
+        <a href="https://x.com/yuasu2453/status/2017539631647244755" target="_blank" style="font-size:0.8rem; color:#0f3460;">投稿を見る</a>
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">立ち止まること自体は正常な反応だと思います。「なぜ決まらないのか」を問うより「何で決めたいのか」を先に整理するほうが、たいてい早く動き出せる。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">何週間も立ち止まってしまう経験、当事者としても見てきた立場としても、よくわかります。焦りと罪悪感が重なって、さらに判断できなくなる。「急がなくていい」はその通りで、ただ「急がなくていい間に軸を整える」ができると、決断の質が変わります。焦らないことと、漂うことは違う。</div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-rank">
+          <span class="rank-badge">TOP 5</span>
+          <span class="scene-badge">A/D: 複合型</span>
+        </div>
+        <div class="post-title">@sayu5632j「僕の世代、ずっとタイミングが悪い」</div>
+        <div class="post-reason">氷河期・リーマン・震災を経験した世代の当事者性。のりあきさん自身が58歳で同世代。この共感は本物として届く。元人事のさゆりさんのフォロワーはターゲット層が多い。</div>
+        <a href="https://x.com/sayu5632j/status/2025122918922092582" target="_blank" style="font-size:0.8rem; color:#0f3460;">投稿を見る</a>
+        <div class="reply-label">短文版</div>
+        <div class="reply-box">この世代は「自分のせいじゃない荒波」を何度もくぐってきた。それでもここまで来たことは、本当にすごいことだと思います。</div>
+        <div class="reply-label">丁寧版</div>
+        <div class="reply-box detailed">「ずっとタイミングが悪かった」という感覚、同世代として胸に刺さりました。氷河期、リーマン、震災——自分で選んだわけじゃない波に何度も飲まれてきた。その重さを「キャリアアップ」という言葉で包んで面接に臨む姿、切ないです。その方が本当に話したいこと、きちんと聴いてもらえる場所があってほしい。</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">4</span>
+      競合動向（簡易チェック）
+    </div>
+    <div class="section-body">
+
+      <div class="comp-card">
+        <div class="comp-handle">@Katsuta_0511 — 勝田健｜ライフシフトラボ取締役</div>
+        <span class="comp-status active">検索確認済み・活動中</span>
+        <div class="comp-desc">
+          「45歳からの実践型キャリアスクール」として積極的に訴求中。コミュニティ型・スクール型の集団支援モデル。<br>
+          <strong>差別化：</strong>のりあきさんは「1on1の個別伴走」「成果物が残る」点で対極。スクールで満たせない「深い個別対話」ニーズを狙える。
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-handle">@ebi320118 — 海老一宏｜アクティベイト株式会社代表</div>
+        <span class="comp-status active">検索確認済み・活動中</span>
+        <div class="comp-desc">
+          「ミドル・シニア転職支援」特化。転職エージェント的アプローチ（求人紹介・マッチング）。<br>
+          <strong>差別化：</strong>エージェントは「求人紹介がゴール」、のりあきさんは「判断軸の整理がゴール」。転職を迷っている段階ではエージェントより前の段階を担える強みがある。
+        </div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-handle">@2G_coach — 47歳キャリア再起動</div>
+        <span class="comp-status unknown">今回確認できず</span>
+        <div class="comp-desc">検索インデックスなし。アカウント非公開または低活動の可能性。引き続き直接確認が必要。</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-handle">@coach_coo — 40-50代セカンドキャリアコーチ</div>
+        <span class="comp-status unknown">今回確認できず</span>
+        <div class="comp-desc">検索インデックスなし。前回同様。直接アクセスで確認推奨。</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-handle">@asuiro_lab — 50代人生再設計</div>
+        <span class="comp-status low">@asuiro_pjとして確認（詳細未取得）</span>
+        <div class="comp-desc">「あすいろプロジェクト」公式として@asuiro_pjが存在。投稿内容の詳細は取得できず。次回確認で差別化評価が必要。</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="num">5</span>
+      今週のアクションリスト
+    </div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>優先度</th>
+            <th>アクション</th>
+            <th>期限</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="priority-high">高</span></td>
+            <td>TOP1（@sayu5632j 管理職投稿）へのリプライ実行</td>
+            <td>今日中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-high">高</span></td>
+            <td>違和感投稿「管理職15年目の同期」をXに投稿</td>
+            <td>今週中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-high">高</span></td>
+            <td>面接官目線投稿「判断軸が見える人が通る」をXに投稿</td>
+            <td>今週中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-mid">中</span></td>
+            <td>TOP4（@yuasu2453 転職迷い投稿）へのリプライ実行</td>
+            <td>今週中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-mid">中</span></td>
+            <td>ケース投稿「Aさん（52歳）の判断軸」をXに投稿</td>
+            <td>来週中</td>
+          </tr>
+          <tr>
+            <td><span class="priority-low">低</span></td>
+            <td>@asuiro_labの詳細確認（直接アクセスが必要）</td>
+            <td>随時</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Life & Work Bloom｜X巡回レポート 2026-05-04｜自動生成
+</footer>
+
+</body>
+</html>
