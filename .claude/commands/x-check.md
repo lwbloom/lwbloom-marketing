@@ -1,4 +1,4 @@
-## 1. 自社アカウント分析
+U                                                                                                                                             ## 1. 自社アカウント分析
 
 以下のキーワードでWeb検索し、自社アカウントの最新投稿を確認すること。
 
@@ -33,6 +33,7 @@ description: X・LinkedInの巡回分析と見込み客発見
 - 不足している型の投稿案を3つ提案
 　ルールは、下記「## X投稿の文体ルール（最重要）」に沿って作成する
 　文字数は200文字前後
+　前日と同じ内容は記載しないこと
 
 ---
 
@@ -72,6 +73,8 @@ description: X・LinkedInの巡回分析と見込み客発見
 - のりあきさんの武器（面接官経験・管理職経験・同世代当事者性）が直接活きる
 - リプライで「売り込み」にならず「この人は分かっている」と思ってもらえる
 - フォロワー数やエンゲージメントが一定以上ある（リーチが見込める）
+- 前日と同じ投稿は選出しない
+
 
 以下の形式で出力すること：
 
@@ -86,6 +89,7 @@ description: X・LinkedInの巡回分析と見込み客発見
 - 絶対に売り込まない
 - 共感 → 面接官目線 or 管理職経験からの一言 → 価値提供
 - サービスURLは貼らない。信頼を積むだけ
+- リプライの言葉遣いは丁寧語で「です」「ます」調にすること
 
 ---
 
@@ -106,6 +110,152 @@ description: X・LinkedInの巡回分析と見込み客発見
 
 ---
 
+## 5. GA4集客データ分析
+
+まず以下のコマンドで仮想環境を有効化すること：
+
+```bash
+source ~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/activate
+
+以下のPythonスクリプトを `/tmp/ga4_fetch.py` として作成し実行すること。
+
+```python
+import os
+import json
+from datetime import datetime, timedelta
+from google.analytics.data_v1beta import BetaAnalyticsDataClient
+from google.analytics.data_v1beta.types import (
+    RunReportRequest, Dimension, Metric, DateRange, OrderBy
+)
+from google.oauth2 import service_account
+
+CREDENTIALS_PATH = os.path.expanduser(
+    "~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Life&Work Bloom/鍵/lwbloom-mcp-60b75c8ca130.json"
+)
+PROPERTY_ID = "536766233"
+
+credentials = service_account.Credentials.from_service_account_file(
+    CREDENTIALS_PATH,
+    scopes=["https://www.googleapis.com/auth/analytics.readonly"]
+)
+client = BetaAnalyticsDataClient(credentials=credentials)
+
+end_date = datetime.today().strftime("%Y-%m-%d")
+start_date = (datetime.today() - timedelta(days=90)).strftime("%Y-%m-%d")
+date_range = DateRange(start_date=start_date, end_date=end_date)
+
+results = {}
+
+# チャネル別集客データ
+req1 = RunReportRequest(
+    property=f"properties/{PROPERTY_ID}",
+    dimensions=[Dimension(name="sessionDefaultChannelGroup")],
+    metrics=[
+        Metric(name="sessions"),
+        Metric(name="totalUsers"),
+        Metric(name="engagementRate"),
+        Metric(name="conversions"),
+    ],
+    date_ranges=[date_range],
+    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)]
+)
+r1 = client.run_report(req1)
+results["channel"] = [
+    {
+        "channel": row.dimension_values[0].value,
+        "sessions": row.metric_values[0].value,
+        "users": row.metric_values[1].value,
+        "engagement_rate": f"{float(row.metric_values[2].value)*100:.1f}%",
+        "conversions": row.metric_values[3].value,
+    }
+    for row in r1.rows
+]
+
+# 上位ページ別データ
+req2 = RunReportRequest(
+    property=f"properties/{PROPERTY_ID}",
+    dimensions=[Dimension(name="pagePath"), Dimension(name="pageTitle")],
+    metrics=[
+        Metric(name="screenPageViews"),
+        Metric(name="averageSessionDuration"),
+        Metric(name="bounceRate"),
+    ],
+    date_ranges=[date_range],
+    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)],
+    limit=10
+)
+r2 = client.run_report(req2)
+results["pages"] = [
+    {
+        "path": row.dimension_values[0].value,
+        "title": row.dimension_values[1].value,
+        "pageviews": row.metric_values[0].value,
+        "avg_duration": f"{float(row.metric_values[1].value):.0f}秒",
+        "bounce_rate": f"{float(row.metric_values[2].value)*100:.1f}%",
+    }
+    for row in r2.rows
+]
+
+# 流入元別データ
+req3 = RunReportRequest(
+    property=f"properties/{PROPERTY_ID}",
+    dimensions=[Dimension(name="sessionSource"), Dimension(name="sessionMedium")],
+    metrics=[
+        Metric(name="sessions"),
+        Metric(name="totalUsers"),
+        Metric(name="engagementRate"),
+    ],
+    date_ranges=[date_range],
+    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)],
+    limit=10
+)
+r3 = client.run_report(req3)
+results["source_medium"] = [
+    {
+        "source": row.dimension_values[0].value,
+        "medium": row.dimension_values[1].value,
+        "sessions": row.metric_values[0].value,
+        "users": row.metric_values[1].value,
+        "engagement_rate": f"{float(row.metric_values[2].value)*100:.1f}%",
+    }
+    for row in r3.rows
+]
+
+with open("/tmp/ga4_data.json", "w", encoding="utf-8") as f:
+    json.dump(results, f, ensure_ascii=False, indent=2)
+
+print("✅ GA4データ取得完了")
+print(json.dumps(results, ensure_ascii=False, indent=2))
+```
+
+スクリプト作成後、以下のコマンドで実行すること：
+
+```bash
+~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/python3 /tmp/ga4_fetch.py
+```
+
+取得したデータをもとに以下を分析し、レポートに含めること：
+
+### GA4分析観点
+
+**チャネル別分析：**
+- 最も貢献しているチャネルと伸びしろのあるチャネル
+- エンゲージメント率・コンバージョン率が低いチャネルの課題
+
+**ページ分析：**
+- 最も読まれているページと直帰率が高く要改善のページ
+- X・LinkedInからの流入と連動しているページはどれか
+
+**集客改善施策：**
+Life & Work Bloom（50代キャリア支援）に特化した施策を3つ提案すること。
+各施策は以下の形式で記載：
+- **施策名**
+- **優先度**（高・中・低）
+- **根拠**（どのデータから導いたか）
+- **具体的アクション**
+- **期待効果**
+
+---
 
 ## X投稿の文体ルール（最重要）
 
@@ -144,7 +294,15 @@ description: X・LinkedInの巡回分析と見込み客発見
 ## 出力先
 
 レポートを reports/ フォルダに以下のファイル名で保存すること：
-reports/x-check-YYYY-MM-DD.md（当日の日付）
-作成したmdファイルをwebで視覚的に見やすくすファイルを作成すること
-出力するWebページは、「~/projects/lwbloom/marketing/reports/Master.html」のフォーマットに合わせること
+`reports/x-check-YYYY-MM-DD.md`（当日の日付）
+
+レポートには以下のセクションを全て含めること：
+1. 自社アカウント分析（X・LinkedIn）
+2. 見込み客リスト
+3. リプライ候補TOP5
+4. 競合動向
+5. **GA4集客データ分析・施策提案**
+
+作成したmdファイルをwebで視覚的に見やすくするファイルを作成すること。
+出力するWebページは、`~/projects/lwbloom/marketing/reports/Master.html` のフォーマットに合わせること。
 
