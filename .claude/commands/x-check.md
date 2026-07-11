@@ -34,6 +34,8 @@ description: X・LinkedInの巡回分析と見込み客発見
 　ルールは、下記「## X投稿の文体ルール（最重要）」に沿って作成する
 　文字数は200文字前後
 　前日と同じ内容は記載しないこと
+　**投稿案の文面は、既存のX投稿（実際の直近投稿）を読み込み、そこから抽出した本人の実際の言い回し・語尾・トーンをベースに作成すること。**
+　下記の文体ルールはあくまで一般的な指針であり、実際の投稿内容と食い違う場合は実際の投稿の口調を優先する。
 
 ---
 
@@ -130,10 +132,25 @@ Web検索ツールでは「今日・昨日」への絞り込みが技術的に�
 ```bash
 source ~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/activate
 
-以下のPythonスクリプトを `/tmp/ga4_fetch.py` として作成し実行すること。
+以下のPythonスクリプトを `$TMPDIR/ga4_fetch.py` として作成し実行すること。
 
 ```python
+import sys
 import os
+import types
+
+# gRPCはsocks5hプロキシ非対応のため、HTTPプロキシに切り替える
+os.environ['GRPC_PROXY'] = 'http://localhost:51747'
+os.environ['grpc_proxy'] = 'http://localhost:51747'
+# certifiのPEMファイルはサンドボックスでブロックされるためモックに差し替える
+os.environ['GRPC_DEFAULT_SSL_ROOTS_FILE_PATH'] = '/etc/ssl/cert.pem'
+fake_certifi = types.ModuleType('certifi')
+fake_certifi.where = lambda: '/etc/ssl/cert.pem'
+sys.modules['certifi'] = fake_certifi
+fake_certifi_core = types.ModuleType('certifi.core')
+fake_certifi_core.where = lambda: '/etc/ssl/cert.pem'
+sys.modules['certifi.core'] = fake_certifi_core
+
 import json
 from datetime import datetime, timedelta
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
@@ -234,7 +251,7 @@ results["source_medium"] = [
     for row in r3.rows
 ]
 
-with open("/tmp/ga4_data.json", "w", encoding="utf-8") as f:
+with open(os.path.join(os.environ.get('TMPDIR', '/tmp'), 'ga4_data.json'), "w", encoding="utf-8") as f:
     json.dump(results, f, ensure_ascii=False, indent=2)
 
 print("✅ GA4データ取得完了")
@@ -244,7 +261,7 @@ print(json.dumps(results, ensure_ascii=False, indent=2))
 スクリプト作成後、以下のコマンドで実行すること：
 
 ```bash
-~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/python3 /tmp/ga4_fetch.py
+~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/python3 "$TMPDIR/ga4_fetch.py"
 ```
 
 取得したデータをもとに以下を分析し、レポートに含めること：
@@ -274,6 +291,8 @@ Life & Work Bloom（50代キャリア支援）に特化した施策を3つ提案
 
 あなたは「コンサルタント」でも「コーチ」でもない。
 58歳、IT企業で管理職を20年やった人間として書く。
+
+**投稿案を作成する前に、必ず実際の直近投稿（最低10〜15件）を確認し、そこで使われている語尾・敬語の有無・問いかけ方・締め方のパターンを抽出すること。以下のルールと実際の投稿の口調が食い違う場合は、実際の投稿を優先する。**
 
 ### 絶対に守ること
 1. **正論を書くな。** 「〜が大切です」「〜すべきです」は禁止。
