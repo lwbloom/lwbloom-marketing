@@ -1,30 +1,16 @@
-U                                                                                                                                             ## 1. 自社アカウント分析
-
-以下のキーワードでWeb検索し、自社アカウントの最新投稿を確認すること。
-
-- "lwbloom" site:x.com
-- "西村徳昭" site:linkedin.com
-
-分析観点：
-- 直近の投稿頻度
-- 5つの型（違和感/構造化/面接官目線/ケース/導線）のバランス
-- エンゲージメントが高そうな投稿の特徴
-- 不足している型の投稿案を3つ提案
-
 ---
-description: X・LinkedInの巡回分析と見込み客発見
+description: X巡回分析と見込み客発見（LinkedInは対象外・別サイクルで手動確認）
 ---
 
-以下の3つの作業を順番に行い、レポートとして出力してください。
+以下の作業を順番に行い、レポートとして出力してください。
+
+**注記：LinkedInは自動化・スクレイピング対策により継続的な自動取得ができないため、日次のx-checkの確認項目からは外している。LinkedIn運用状況（週1〜2本の記事執筆の進捗など）は、のりあきさんが週次・月次など別サイクルで手動確認する運用とする。**
 
 ---
 
-## 1. 自社アカウント分析
+## 1. 自社Xアカウント分析
 
-以下のURLにアクセスし、現在の投稿状況を確認すること。
-
-- X: https://x.com/lwbloom
-- LinkedIn: https://www.linkedin.com/in/lwbloom/
+X: https://x.com/lwbloom にアクセスし、現在の投稿状況を確認すること。
 
 分析観点：
 - 直近の投稿頻度
@@ -36,6 +22,40 @@ description: X・LinkedInの巡回分析と見込み客発見
 　前日と同じ内容は記載しないこと
 　**投稿案の文面は、既存のX投稿（実際の直近投稿）を読み込み、そこから抽出した本人の実際の言い回し・語尾・トーンをベースに作成すること。**
 　下記の文体ルールはあくまで一般的な指針であり、実際の投稿内容と食い違う場合は実際の投稿の口調を優先する。
+
+### 投稿案作成前のトレンド確認（必須）
+
+3つの投稿案を作る前に、X上で今どんな話題が動いているかを検索で確認し、実在するトレンド・議論に根ざした内容にすること。架空の場面や自分の想像だけで書かない。
+
+最低限含める検索キーワード：
+- 「転職エージェント 後悔」
+- 「転職エージェント 話が違う」
+- 「内定 入社したら 話が違う」
+
+上記に加え、その時々でX上のトレンド（本日のニュース欄や話題のポスト）に50代の転職・キャリア・面接・管理職に関連するものがあれば、それも検索・確認して投稿案のネタ候補にする。
+
+見つけたトレンド・議論は、個人の作り話にせず、「最近、X上でよく見かける話があります」のように実際に観測した流れとして扱い、そこから自分の経験・視点を重ねて書くこと（特定個人の投稿を無断で引用・要約しすぎない）。
+
+**ケース投稿についての重要な制約：**
+ケース投稿（Before/After型）は、のりあきさんが実際に行ったセッションの内容（匿名化可）に基づくものに限る。実在しない相談者（架空の「Kさん」「Mさん」等）を作り出して投稿案にすることは絶対にしない。ケース投稿の型が手薄でも、実際のエピソードが手元にない場合は無理に埋めず、他の4つの型（違和感/構造化/面接官目線/導線）から提案するか、のりあきさんに実際にあったセッションのエピソードを尋ねること。
+
+### 投稿案へのX投稿ボタン付与（必須）
+
+3つの投稿案それぞれに、ワンクリックでX投稿画面を開く「投稿ボタン」を付与すること。
+これはX公式のWeb Intent機能（規約準拠・自動化検知の対象外）を用いる。
+
+**手順：**
+1. 各投稿案の本文（改行・記号を含む全文）をURLエンコードする
+   （改行は %0A、スペースは %20 等。日本語・記号もすべてエンコードすること）
+2. 次のURL形式を組み立てる：
+   `https://x.com/intent/post?text=（エンコード済み本文）`
+3. mdファイル内では、各投稿案の直後に以下のMarkdownリンクを記載する：
+   `[𝕏 この内容で投稿する](組み立てたURL)`
+
+**注意事項：**
+- 本文が欠けないよう、エンコードは全文に対して漏れなく行うこと
+- 導線投稿にCTAのURL（lwbloom.jp）が含まれる場合、そのURLも本文の一部としてエンコードに含めること
+- エンコード後の投稿本文が実質140字（URL含む）を大きく超える場合は、本文を短縮して文字数警告を注記すること
 
 ---
 
@@ -85,16 +105,15 @@ description: X・LinkedInの巡回分析と見込み客発見
 
 **投稿日の確認方法：**
 X投稿のURLに含まれるステータスID（数値）は時系列順になっている。
-現在（2026年5月）の目安：ステータスIDが `2049000000000000000` 以上を当日・前日の投稿として扱う。
+現在（2026年7月）の目安：ステータスIDが `2076000000000000000` 以上を当日・前日の投稿として扱う。
 これより小さいIDの投稿は数週間〜数ヶ月前の投稿である可能性が高いため、リプライ候補から除外すること。
 
 **検索ツールの制約への対応：**
 Web検索ツールでは「今日・昨日」への絞り込みが技術的に困難な場合がある。
 その場合は以下の方法で対応すること：
-1. 検索クエリに投稿IDの目安（`x.com/status/205`）を含めて絞り込みを試みる
+1. 検索クエリに投稿IDの目安を含めて絞り込みを試みる
 2. それでも最新投稿が見つからない場合は「**当日・前日の投稿が確認できませんでした**」とレポートに明記し、候補を空欄にするかリプライ可能性の参考情報として古い投稿を注記付きで掲載する
 3. 「候補が見つからなかった」は正直な報告であり、古い投稿を新しいかのように偽って掲載してはならない
-
 
 以下の形式で出力すること：
 
@@ -136,27 +155,15 @@ Web検索ツールでは「今日・昨日」への絞り込みが技術的に�
 
 ```bash
 source ~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/activate
+```
+
+**注記：`.venv`はマシン固有（アーキテクチャ依存）である。`python3 -m pip --version`などで動作確認し、importエラーが出る場合は`rm -rf .venv && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`でこのマシン用に作り直すこと。**
 
 以下のPythonスクリプトを `$TMPDIR/ga4_fetch.py` として作成し実行すること。
 
 ```python
-import sys
-import os
-import types
-
-# gRPCはsocks5hプロキシ非対応のため、HTTPプロキシに切り替える
-os.environ['GRPC_PROXY'] = 'http://localhost:51747'
-os.environ['grpc_proxy'] = 'http://localhost:51747'
-# certifiのPEMファイルはサンドボックスでブロックされるためモックに差し替える
-os.environ['GRPC_DEFAULT_SSL_ROOTS_FILE_PATH'] = '/etc/ssl/cert.pem'
-fake_certifi = types.ModuleType('certifi')
-fake_certifi.where = lambda: '/etc/ssl/cert.pem'
-sys.modules['certifi'] = fake_certifi
-fake_certifi_core = types.ModuleType('certifi.core')
-fake_certifi_core.where = lambda: '/etc/ssl/cert.pem'
-sys.modules['certifi.core'] = fake_certifi_core
-
 import json
+import os
 from datetime import datetime, timedelta
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import (
@@ -259,7 +266,7 @@ results["source_medium"] = [
 with open(os.path.join(os.environ.get('TMPDIR', '/tmp'), 'ga4_data.json'), "w", encoding="utf-8") as f:
     json.dump(results, f, ensure_ascii=False, indent=2)
 
-print("✅ GA4データ取得完了")
+print("GA4データ取得完了")
 print(json.dumps(results, ensure_ascii=False, indent=2))
 ```
 
@@ -268,6 +275,8 @@ print(json.dumps(results, ensure_ascii=False, indent=2))
 ```bash
 ~/Library/Mobile\ Documents/com~apple~CloudDocs/projects/lwbloom/marketing/.venv/bin/python3 "$TMPDIR/ga4_fetch.py"
 ```
+
+**接続エラーになる場合：** 環境にHTTPプロキシ（`HTTP_PROXY`/`HTTPS_PROXY`等）が実際に設定されていない限り、gRPCのプロキシ環境変数を追加してはならない。直接接続で到達できることを`curl -s -o /dev/null -w "%{http_code}" https://analyticsdata.googleapis.com/`等で確認してから実行すること。
 
 取得したデータをもとに以下を分析し、レポートに含めること：
 
@@ -279,7 +288,7 @@ print(json.dumps(results, ensure_ascii=False, indent=2))
 
 **ページ分析：**
 - 最も読まれているページと直帰率が高く要改善のページ
-- X・LinkedInからの流入と連動しているページはどれか
+- Xからの流入と連動しているページはどれか
 
 **集客改善施策：**
 Life & Work Bloom（50代キャリア支援）に特化した施策を3つ提案すること。
@@ -327,6 +336,7 @@ Life & Work Bloom（50代キャリア支援）に特化した施策を3つ提案
 - 50代の同僚や部下が急に元気をなくした時、何が起きていた？
 - 自分が「もう無理だ」と思った時、最初に何をした？
 
+---
 
 ## 出力先
 
@@ -334,7 +344,7 @@ Life & Work Bloom（50代キャリア支援）に特化した施策を3つ提案
 `reports/x-check-YYYY-MM-DD.md`（当日の日付）
 
 レポートには以下のセクションを全て含めること：
-1. 自社アカウント分析（X・LinkedIn）
+1. 自社Xアカウント分析
 2. 見込み客リスト
 3. リプライ候補TOP5
 4. 競合動向
@@ -343,3 +353,24 @@ Life & Work Bloom（50代キャリア支援）に特化した施策を3つ提案
 作成したmdファイルをwebで視覚的に見やすくするファイルを作成すること。
 出力するWebページは、`~/projects/lwbloom/marketing/reports/Master.html` のフォーマットに合わせること。
 
+**HTML化における投稿ボタンの描画（必須）：**
+セクション1の3つの投稿案それぞれについて、投稿本文（post-content）の直後に、
+X投稿画面を開くボタンを配置すること。ボタンは以下のHTMLで生成する：
+
+```html
+<a href="https://x.com/intent/post?text=（エンコード済み本文）"
+   target="_blank" rel="noopener"
+   style="display:inline-block; margin-top:12px;
+          background:linear-gradient(135deg,#0f3460,#533483);
+          color:#fff; text-decoration:none; border-radius:8px;
+          padding:10px 20px; font-size:0.88rem; font-weight:700;">
+  𝕏 この内容で投稿する
+</a>
+```
+
+href の text パラメータには、その投稿案の本文をURLエンコードした文字列を入れること。
+エンコード処理を確実に行うため、HTML生成時は以下のいずれかを用いる：
+- Pythonで生成する場合：`urllib.parse.quote(本文, safe='')`
+- JavaScriptで生成する場合：`encodeURIComponent(本文)`
+
+ボタンを押すと、本文が入力済みのX投稿画面が新規タブで開く。
