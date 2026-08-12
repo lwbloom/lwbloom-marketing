@@ -5,3 +5,6 @@
 .DS_Store
 reports/
 .venv/
+.venv_ga4/
+.venv_new/
+.pylibs/
